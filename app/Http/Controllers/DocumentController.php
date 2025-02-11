@@ -31,7 +31,7 @@ class DocumentController extends Controller
             return $filePath;
         } catch (Exception $e)
         {
-            return false;
+            return $e;
         }
     }
 
