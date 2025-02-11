@@ -4,8 +4,8 @@ FROM php:8.2-fpm
 # Set working directory
 WORKDIR /var/www
 
-# Update package list and install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Update and install dependencies
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
     nginx \
     libpq-dev \
     php-pgsql \
@@ -16,9 +16,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     git \
     curl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_pgsql gd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
