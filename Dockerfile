@@ -31,8 +31,8 @@ RUN chmod -R 775 storage bootstrap/cache
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose HTTP port 80
+# Expose HTTP port
 EXPOSE 80
 
 # Start Nginx and PHP-FPM together
-CMD service nginx start && php-fpm
+CMD service nginx start && php-fpm -F
