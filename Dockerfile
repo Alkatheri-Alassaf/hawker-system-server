@@ -6,6 +6,7 @@ WORKDIR /var/www
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
+    nginx \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -27,6 +28,11 @@ RUN composer install --no-dev --optimize-autoloader
 # Set permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# Expose port 9000 and run PHP-FPM
-EXPOSE 9000
-CMD ["php-fpm"]
+# Copy Nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose HTTP port 80
+EXPOSE 80
+
+# Start Nginx and PHP-FPM together
+CMD service nginx start && php-fpm
