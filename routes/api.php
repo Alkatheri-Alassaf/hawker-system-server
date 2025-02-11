@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HawkerController;
 
+Route::options('{any}', function (Request $request) {
+    return response()->json(['status' => 'ok'], 200, [
+        'Access-Control-Allow-Origin' => 'https://hawker-licenes.netlify.app',
+        'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers' => '*'
+    ]);
+})->where('any', '.*');
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
