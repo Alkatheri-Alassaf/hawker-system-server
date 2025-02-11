@@ -4,11 +4,9 @@ FROM php:8.2-fpm
 # Set working directory
 WORKDIR /var/www
 
-# Install dependencies (including PostgreSQL support)
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     nginx \
-    libpq-dev \
-    php8.2-pgsql \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -16,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    && docker-php-ext-install pdo pdo_pgsql gd
+    && docker-php-ext-install pdo pdo_mysql gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
