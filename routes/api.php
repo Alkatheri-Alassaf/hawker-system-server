@@ -22,7 +22,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/', UserController::class . '@login');
+Route::post('/login', UserController::class . '@login');
 Route::post('register', UserController::class . '@register');
 Route::put('reset-password', UserController::class . '@restPassword');
 
